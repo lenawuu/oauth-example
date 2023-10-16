@@ -18,4 +18,11 @@ router.get('/logout', (req, res) => {
     res.send('Logging out');
 });
 
+// Callback route -- passport = extra middleware (fired before response, 
+//      automatically extracts profile code from URL, then calls callback
+//      function in passport-setup)
+router.get('/spotify/callback', passport.authenticate('spotify'), (req, res) => {
+    res.send('callback uri yuh');
+});
+
 module.exports = router;
