@@ -8,21 +8,24 @@ router.get('/login', (req, res) => {
 // Auth with Spotify
 router.get('/spotify', passport.authenticate('spotify',{
         scope: ['user-read-email', 'user-read-private'],
-        showDialog: true,
+        showDialog: false,
     })
 );
 
 // Auth logout
-router.get('/logout', (req, res) => {
-    // Handle with Passport
-    res.send('Logging out');
+router.get('/logout', function(req, res, next) {
+    req.logout(function(err) {
+        if(err) { return next(err); }
+        res.redirect('/');
+    });
 });
 
 // Callback route -- passport = extra middleware (fired before response, 
 //      automatically extracts profile code from URL, then calls callback
 //      function in passport-setup)
 router.get('/spotify/callback', passport.authenticate('spotify'), (req, res) => {
-    res.send('callback uri yuh');
+    //res.send(req.user);
+    res.redirect('/profile/');
 });
 
 module.exports = router;
