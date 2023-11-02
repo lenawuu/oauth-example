@@ -1,2 +1,2 @@
 # oauth-example
-Example OAuth flow
+Example OAuth flow for Spotify using Passport.js
